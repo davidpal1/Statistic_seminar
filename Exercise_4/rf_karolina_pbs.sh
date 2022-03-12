@@ -5,7 +5,7 @@
 #PBS -e rf.e
 #PBS -o rf.o
 
-cd ~/KPMS-IT4I-EX/code
+cd ~/Statistic_seminar/code
 pwd
 
 module load R
