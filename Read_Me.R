@@ -8,6 +8,6 @@
 
 # Tried 1st edditing
 #David Palecek - done 
-#Pavel XXX 
+#Pavel Janushonak 
 #Veronika Funkova 
 #Matej Lebeda
