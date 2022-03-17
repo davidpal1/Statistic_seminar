@@ -24,12 +24,12 @@ fold_err = function(i, cv_pars, folds, train) {
   sum(pred != train$lettr[fold])                                                #prediciton error
 }
 
-nc = as.numeric(commandArgs(TRUE)[1])
+nc = as.numeric(commandArgs(TRUE)[1])                                           #setting n.cores
 cat("Running with", nc, "cores\n")
 system.time({
   cv_err = parallel::mclapply(1:nrow(cv_pars), fold_err, cv_pars, folds = folds,
-                              train = train, mc.cores = nc) 
-  err = tapply(unlist(cv_err), cv_pars[, "mtry"], sum)
+                              train = train, mc.cores = nc)                     #do fold_err for yeach combination of fold(1:10 groups) and mtry (1:16 branches for forest)
+  err = tapply(unlist(cv_err), cv_pars[, "mtry"], sum)                          #number of wrong precitions for each mtry (sum over all different folds))
 })
 pdf(paste0("rf_cv_mc", nc, ".pdf")); plot(mtry_val, err/(n - n_test)); dev.off()
 
