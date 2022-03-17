@@ -14,10 +14,10 @@ nfolds = 10
 mtry_val = 1:(ncol(train) - 1) 
 folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) ) #each observation "randomly" put into one of  1:10 folds
 cv_df = data.frame(mtry = mtry_val, incorrect = rep(0, length(mtry_val)))
-cv_pars = expand.grid(mtry = mtry_val, f = 1:nfolds)
+cv_pars = expand.grid(mtry = mtry_val, f = 1:nfolds)#table that combines all combination of folds and mtry
 fold_err = function(i, cv_pars, folds, train) {
-  mtry = cv_pars[i, "mtry"]
-  fold = (folds == cv_pars[i, "f"])
+  mtry = cv_pars[i, "mtry"]                                                     #given i - which mtry I will use
+  fold = (folds == cv_pars[i, "f"])                                             #given i I will use fond(i) - this gives all rows from train that are in fold i
   rf.all = randomForest(lettr ~ ., train[!fold, ], ntree = ntree,
                         mtry = mtry, norm.votes = FALSE)
   pred = predict(rf.all, train[fold, ])
