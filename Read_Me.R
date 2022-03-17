@@ -9,5 +9,5 @@
 # Tried 1st edditing
 #David Palecek - done 
 #Pavel Janushonak 
-#Veronika Funkova 
+#Veronika Funkova - done
 #Matej Lebeda
