@@ -66,4 +66,4 @@ correct_cv <- sum(pred == test$lettr)
 #pred_cv = predict(rf.all, test)
 #correct_cv = sum(pred_cv == test$lettr)
 cat("Proportion Correct: ", correct/n_test, "(mtry = ", floor((ncol(test) - 1)/3),
-    ") with cv:", correct_cv/n_test, "(mtry = ", mtry, ")\n", sep = "")
+    ") with cv:", correct_cv/n_test, "(mtry = ", mtry_cv, ")\n", sep = "")
