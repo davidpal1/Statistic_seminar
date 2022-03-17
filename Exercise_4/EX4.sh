@@ -15,7 +15,3 @@ echo "loaded R"
 time Rscript EX4.r 32
 time Rscript EX4.r 64
 time Rscript EX4.r 128
-
-time Rscript EX42.r 32
-time Rscript EX42.r 64
-time Rscript EX42.r 128

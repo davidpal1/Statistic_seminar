@@ -36,6 +36,10 @@ pdf(paste0("rf_cv_mc", nc, ".pdf")); plot(mtry_val, err/(n - n_test)); dev.off()
 
 
 
+ntree_par = lapply(splitIndices(ntree, nc), length)
+rf = function(x) randomForest(lettr ~ ., train, ntree=x, norm.votes = FALSE)
+rf.out = mclapply(ntree, rf, mc.cores = nc)
+rf.all = do.call(combine, rf.out)
 
 
 rf.all = randomForest(lettr ~ ., train, ntree = ntree)
@@ -44,7 +48,7 @@ correct = sum(pred == test$lettr)
 
 mtry = mtry_val[which.min(err)]
 rf.all = randomForest(lettr ~ ., train, ntree = ntree, mtry = mtry)
-pred_cv = predict(rf.all, test)
-correct_cv = sum(pred_cv == test$lettr)
+pred_cv =  sum(pred_cv == test$lettr)
+correct_cv = mtry = mtry_val[which.min(err)]
 cat("Proportion Correct: ", correct/n_test, "(mtry = ", floor((ncol(test) - 1)/3),
     ") with cv:", correct_cv/n_test, "(mtry = ", mtry, ")\n", sep = "")

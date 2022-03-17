@@ -34,17 +34,36 @@ system.time({
 pdf(paste0("rf_cv_mc", nc, ".pdf")); plot(mtry_val, err/(n - n_test)); dev.off()
 
 
+#Making parallel this particular tree
+ntree_par = lapply(splitIndices(ntree, nc), length)
+rf_par = function(x) randomForest(lettr ~ ., train, ntree=x)
+rf.out = mclapply(ntree_par, rf_par, mc.cores = nc)
+rf.all = do.call(combine, rf.out)
 
+crows = splitIndices(nrow(test), nc) 
+rfp = function(x) as.vector(predict(rf.all, test[x, ])) 
+cpred = mclapply(crows, rfp, mc.cores = nc) 
+pred = do.call(c, cpred) 
+correct <- sum(pred == test$lettr)
 
+#old code upgraded above
+#rf.all = randomForest(lettr ~ ., train, ntree = ntree)
+#pred = predict(rf.all, test)
+#correct = sum(pred == test$lettr)
 
+mtry_cv = mtry_val[which.min(err)]
 
-rf.all = randomForest(lettr ~ ., train, ntree = ntree)
-pred = predict(rf.all, test)
-correct = sum(pred == test$lettr)
+rf_par2 = function(x) randomForest(lettr ~ ., train, ntree=x, mtry=mtry_cv)
+rf.out = mclapply(ntree_par, rf_par2, mc.cores = nc)
+rf.all = do.call(combine, rf.out)
 
-mtry = mtry_val[which.min(err)]
-rf.all = randomForest(lettr ~ ., train, ntree = ntree, mtry = mtry)
-pred_cv = predict(rf.all, test)
-correct_cv = sum(pred_cv == test$lettr)
+rfp = function(x) as.vector(predict(rf.all, test[x, ])) 
+cpred = mclapply(crows, rfp, mc.cores = nc) 
+pred = do.call(c, cpred) 
+correct_cv <- sum(pred == test$lettr)
+
+#rf.all = randomForest(lettr ~ ., train, ntree = ntree, mtry = mtry)
+#pred_cv = predict(rf.all, test)
+#correct_cv = sum(pred_cv == test$lettr)
 cat("Proportion Correct: ", correct/n_test, "(mtry = ", floor((ncol(test) - 1)/3),
     ") with cv:", correct_cv/n_test, "(mtry = ", mtry, ")\n", sep = "")
