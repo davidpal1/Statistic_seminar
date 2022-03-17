@@ -11,8 +11,8 @@ test = LetterRecognition[i_test, ]
 
 ntree = 200
 nfolds = 10
-mtry_val = 1:(ncol(train) - 1)
-folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) )
+mtry_val = 1:(ncol(train) - 1) 
+folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) ) #each observation "randomly" put into one of  1:10 folds
 cv_df = data.frame(mtry = mtry_val, incorrect = rep(0, length(mtry_val)))
 cv_pars = expand.grid(mtry = mtry_val, f = 1:nfolds)
 fold_err = function(i, cv_pars, folds, train) {
