@@ -18,10 +18,10 @@ cv_pars = expand.grid(mtry = mtry_val, f = 1:nfolds)#table that combines all com
 fold_err = function(i, cv_pars, folds, train) {
   mtry = cv_pars[i, "mtry"]                                                     #given i - which mtry I will use
   fold = (folds == cv_pars[i, "f"])                                             #given i I will use fond(i) - this gives all rows from train that are in fold i
-  rf.all = randomForest(lettr ~ ., train[!fold, ], ntree = ntree,
+  rf.all = randomForest(lettr ~ ., train[!fold, ], ntree = ntree,               #random forest No.1
                         mtry = mtry, norm.votes = FALSE)
-  pred = predict(rf.all, train[fold, ])
-  sum(pred != train$lettr[fold])
+  pred = predict(rf.all, train[fold, ])                                         #prediction on fold data given the random forest
+  sum(pred != train$lettr[fold])                                                #prediciton error
 }
 
 nc = as.numeric(commandArgs(TRUE)[1])
