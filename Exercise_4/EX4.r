@@ -36,7 +36,7 @@ pdf(paste0("rf_cv_mc", nc, ".pdf")); plot(mtry_val, err/(n - n_test)); dev.off()
 
 #Making parallel this particular tree
 ntree_par = lapply(splitIndices(ntree, nc), length)
-rf_par = function(x) randomForest(lettr ~ ., train, ntree=x)
+rf_par = function(x) randomForest(lettr ~ ., train, ntree=x, norm.votes = FALSE)
 rf.out = mclapply(ntree_par, rf_par, mc.cores = nc)
 rf.all = do.call(combine, rf.out)
 
@@ -53,7 +53,7 @@ correct <- sum(pred == test$lettr)
 
 mtry_cv = mtry_val[which.min(err)]
 
-rf_par2 = function(x) randomForest(lettr ~ ., train, ntree=x, mtry=mtry_cv)
+rf_par2 = function(x) randomForest(lettr ~ ., train, ntree=x, mtry=mtry_cv, norm.votes = FALSE)
 rf.out = mclapply(ntree_par, rf_par2, mc.cores = nc)
 rf.all = do.call(combine, rf.out)
 
