@@ -33,12 +33,21 @@ fold_err = function(i, cv_pars, folds, train, cores) {
   cpred = mclapply(crows, rfp, mc.cores = cores) 
   pred = do.call(c, cpred) 
   sum(pred != train$lettr[fold])
+  
+  #rf.all = randomForest(lettr ~ ., train[!fold, ], ntree = ntree, mtry = mtry, norm.votes = FALSE)
+  #pred = predict(rf.all, train[fold, ])    
+  #sum(pred != train$lettr[fold])
 }
 
 
+#system.time({
+#  cv_err = parallel::mclapply(1:nrow(cv_pars), fold_err, cv_pars, folds = folds,
+#                              train = train, cores = nc/4, mc.cores = 3*nc/4)                     
+#  err = tapply(unlist(cv_err), cv_pars[, "mtry"], sum)                          
+#})
 system.time({
   cv_err = parallel::mclapply(1:nrow(cv_pars), fold_err, cv_pars, folds = folds,
-                              train = train, cores = nc/4, mc.cores = 3*nc/4)                     
+                              train = train, cores = nc, mc.cores = nc)                     
   err = tapply(unlist(cv_err), cv_pars[, "mtry"], sum)                          
 })
 pdf(paste0("rf_cv_mc", nc, ".pdf")); plot(mtry_val, err/(n - n_test)); dev.off()
