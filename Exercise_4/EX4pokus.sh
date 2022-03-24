@@ -1,9 +1,9 @@
 #!/bin/bash
-#PBS -N rfp
+#PBS -N rf
 #PBS -l select=1:ncpus=128,walltime=00:05:00
 #PBS -q qexp
-#PBS -e rfp.e
-#PBS -o rfp.o
+#PBS -e rf.e
+#PBS -o rf.o
 
 cd ~/Statistic_seminar/Exercise_4
 pwd
