@@ -10,4 +10,4 @@
 #David Palecek - done 
 #Pavel Janushonak 
 #Veronika Funkova - done
-#Matej Lebeda
+#Matej Lebeda - done 
