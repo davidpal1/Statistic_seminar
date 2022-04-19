@@ -5,7 +5,7 @@
 #PBS -e mnist_svd_cv.e
 #PBS -o mnist_svd_cv.o
 
-cd ~/KPMS-IT4I-EX/mpi
+cd ~/Statistic_seminar/Exercise_8/mpi
 pwd
 
 module load R
