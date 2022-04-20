@@ -91,14 +91,43 @@ model_report = function(models, kplot = 0) {
 
 ######################
 #Zde začínáme
+library(pbdIO)
+com.set.seed(seed=123,diff=TRUE)
+  
 nfolds = 2
 pars = seq(80, 95, 5)
+folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) ) ## random folds
+cv = expand.grid(par = pars, fold = 1:nfolds)  ## all combinations
 
+my_nrow_cv <- comm.chunk(nrow(cv),form="vector")
+my_cv <- cv[my_nrow_cv,]
 
+library(parallel)
+library(ggplot2)
+source("../mnist/mnist_read.R")
+source("../code/flexiblas_setup.r")
 blas_threads = as.numeric(commandArgs(TRUE)[2])
 fork_cores = as.numeric(commandArgs(TRUE)[3])
 setback("OPENBLAS")
 setthreads(blas_threads)
+
+
+## function for parameter combination i
+fold_err = function(i, cv, folds, train) {
+  par = cv[i, "par"]
+  fold = (folds == cv[i, "fold"])
+  models = svdmod(train[!fold, ], train_lab[!fold], pct = par)
+  predicts = predict_svdmod(train[fold, ], models)
+  sum(predicts != train_lab[fold])
+}
+
+## apply fold_err() over parameter combinations
+cv_err = mclapply(1:nrow(cv), fold_err, cv = cv, folds = folds, train = train,
+                  mc.cores = fork_cores)
+
+## sum fold errors for each parameter value
+cv_err_par = tapply(unlist(cv_err), cv[, "par"], sum)
+
 
 setthreads(4)
 models = svdmod(train, train_lab, pct = 95) ### optimizing + right pct
@@ -107,3 +136,5 @@ predicts = predict_svdmod(test, models)
 
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
+
+finalize()
