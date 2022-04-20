@@ -90,6 +90,18 @@ model_report = function(models, kplot = 0) {
 }
 
 ######################
+
+## function for parameter combination i
+fold_err = function(i, cv, folds, train) {
+  par = cv[i, "par"]
+  fold = (folds == cv[i, "fold"])
+  models = svdmod(train[!fold, ], train_lab[!fold], pct = par)
+  predicts = predict_svdmod(train[fold, ], models)
+  sum(predicts != train_lab[fold])
+}
+
+
+
 #Zde začínáme
 library(pbdIO)
 com.set.seed(seed=123,diff=TRUE)
@@ -112,14 +124,7 @@ setback("OPENBLAS")
 setthreads(blas_threads)
 
 
-## function for parameter combination i
-fold_err = function(i, cv, folds, train) {
-  par = cv[i, "par"]
-  fold = (folds == cv[i, "fold"])
-  models = svdmod(train[!fold, ], train_lab[!fold], pct = par)
-  predicts = predict_svdmod(train[fold, ], models)
-  sum(predicts != train_lab[fold])
-}
+
 
 ## apply fold_err() over parameter combinations
 cv_err = mclapply(1:nrow(cv), fold_err, cv = cv, folds = folds, train = train,
