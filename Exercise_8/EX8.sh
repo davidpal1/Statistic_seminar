@@ -10,6 +10,7 @@ pwd
 
 module load R
 echo "loaded R"
+module swap libfabric/1.12.1-GCCcore-10.3.0 libfabric/1.13.2-GCCcore-11.2.0
 
 time Rscript mnist_svd_mv.R
 
