@@ -89,6 +89,10 @@ model_report = function(models, kplot = 0) {
   }
 }
 
+######################
+#Zde začínáme
+nfolds = 10
+
 
 setthreads(4)
 models = svdmod(train, train_lab, pct = 95) ### optimizing + right pct
