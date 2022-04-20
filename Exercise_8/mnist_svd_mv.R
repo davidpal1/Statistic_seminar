@@ -91,8 +91,14 @@ model_report = function(models, kplot = 0) {
 
 ######################
 #Zde začínáme
-nfolds = 10
+nfolds = 2
+pars = seq(80, 95, 5)
 
+
+blas_threads = as.numeric(commandArgs(TRUE)[2])
+fork_cores = as.numeric(commandArgs(TRUE)[3])
+setback("OPENBLAS")
+setthreads(blas_threads)
 
 setthreads(4)
 models = svdmod(train, train_lab, pct = 95) ### optimizing + right pct
