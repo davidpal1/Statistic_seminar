@@ -101,6 +101,7 @@ fold_err = function(i, cv, folds, train) {
 }
 
 
+ cat( "Pred zacatkem ", "\n")
 
 #Zde začínáme
 library(pbdIO)
@@ -113,6 +114,7 @@ cv = expand.grid(par = pars, fold = 1:nfolds)  ## all combinations
 
 my_nrow_cv <- comm.chunk(nrow(cv),form="vector")
 my_cv <- cv[my_nrow_cv,]
+ cat(comm.rank(), "Po  zozhozeni com", "\n")  
 
 library(parallel)
 library(ggplot2)
@@ -124,7 +126,7 @@ setback("OPENBLAS")
 setthreads(blas_threads)
 
 
-
+ cat(comm.rank(), "Just before my_cv_err funkce", "\n") 
 
 ## apply fold_err() over parameter combinations
 #cv_err = mclapply(1:nrow(cv), fold_err, cv = cv, folds = folds, train = train,
