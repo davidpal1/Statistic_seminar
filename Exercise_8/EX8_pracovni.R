@@ -106,7 +106,7 @@ fold_err = function(i, cv, folds, train) {
 
 #Zde začínáme
 library(pbdIO)
-com.set.seed(seed=123,diff=TRUE)
+#com.set.seed(seed=123,diff=TRUE)
   
 nfolds = 2
 pars = seq(80, 95, 5)
