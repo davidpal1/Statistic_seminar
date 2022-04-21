@@ -151,7 +151,7 @@ if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
 models2 = svdmod(train, train_lab, pct = 81,plots = TRUE) ### optimizing + right pct
 
 if(comm.rank() == 3) {pdf("Basis01.pdf")
-model_report(models, kplot = 9)
+model_report(models2, kplot = 3)
 dev.off()}
 
 
