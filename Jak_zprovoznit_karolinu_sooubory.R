@@ -9,3 +9,5 @@ remotes::install_github("RBigData/pbdIO")
 
 install.packages("BioManager")
 BiocManager::install("rhdf5")
+
+install.packages("flexiblast")  #mozna, nevim
