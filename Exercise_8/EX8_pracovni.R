@@ -134,7 +134,7 @@ setthreads(blas_threads)
 my_cv_err = lapply(my_nrow_cv, fold_err, cv = cv, folds = folds, train = train)
 
 all_cv_err = allgather(my_cv_err)
-all_cv_err = do.call(combine, all_cv_err)
+#all_cv_err = do.call(combine, all_cv_err)
 
 cv_err_par = tapply(unlist(all_cv_err), cv[, "par"], sum)
 
