@@ -146,7 +146,7 @@ if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
   ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)), 
          aes(pct, error)) + geom_point() + geom_smooth() +
     labs(title = "Loess smooth with 95% CI of crossvalidation")
-  pdf(paste0("croSSval", nc, ".pdf"))}
+  devoff()}
 
 
 
