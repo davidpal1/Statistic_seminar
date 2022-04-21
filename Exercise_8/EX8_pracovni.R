@@ -110,7 +110,7 @@ fold_err = function(i, cv, folds, train) {
 library(pbdIO)
 #com.set.seed(seed=123,diff=TRUE)
   
-nfolds = 2
+nfolds = 10
 pars = seq(80, 95, 5)
 folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) ) ## random folds
 cv = expand.grid(par = pars, fold = 1:nfolds)  ## all combinations
