@@ -152,7 +152,7 @@ if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
 
 models = svdmod(train, train_lab, pct = 95) ### optimizing + right pct
 
-if(comm.rank() == 1) {pdf("Basis01.pdf")
+if(comm.rank() == 3) {pdf("Basis01.pdf")
 model_report(models, kplot = 9)
 dev.off()}
 
@@ -162,6 +162,6 @@ predicts = predict_svdmod(test, models)
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
 
-if(comm.rank() == 1) {cat(cv "\n")}
+if(comm.rank() == 1) {cat(cv, "\n")}
 
 finalize()
