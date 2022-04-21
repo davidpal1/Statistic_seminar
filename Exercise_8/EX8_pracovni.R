@@ -111,7 +111,7 @@ library(pbdIO)
 #com.set.seed(seed=123,diff=TRUE)
   
 nfolds = 10
-pars = seq(80, 95, 5)
+pars = seq(80, 95, 1)
 folds = sample( rep_len(1:nfolds, nrow(train)), nrow(train) ) ## random folds
 cv = expand.grid(par = pars, fold = 1:nfolds)  ## all combinations
 
