@@ -162,7 +162,7 @@ predicts = predict_svdmod(test, models2)
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
 
-if(comm.rank() == 1) {cat(cv, "\n",cv_err_par,"\n"}
+cat(cv, "bylo CV \n",cv_err_par,"bylo nejlepsi veci\n"
 
 finalize()
 
