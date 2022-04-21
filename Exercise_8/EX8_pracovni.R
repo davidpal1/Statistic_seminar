@@ -143,9 +143,7 @@ cv_err_par = tapply(unlist(all_cv_err), cv[, "par"], sum)
 #cv_err_par = tapply(unlist(cv_err), cv[, "par"], sum)
 
 if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
-  ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)), 
-         aes(pct, error)) + geom_point() + geom_smooth() +
-    labs(title = "Loess smooth with 95% CI of crossvalidation")
+  ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)),  aes(pct, error)) + geom_point() + geom_smooth()+ labs(title = "Loess smooth with 95% CI of crossvalidation")
   dev.off()}
 
 
@@ -161,6 +159,6 @@ predicts = predict_svdmod(test, models2)
 
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
+if(comm.rank() == 4){cat(cv_err_par,"bylo nejlepsi veci\n")}
 
-cat(cv, "bylo CV \n",cv_err_par,"bylo nejlepsi veci\n")
 finalize()
