@@ -162,16 +162,5 @@ predicts = predict_svdmod(test, models2)
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
 
-cat(cv, "bylo CV \n",cv_err_par,"bylo nejlepsi veci\n"
-
+cat(cv, "bylo CV \n",cv_err_par,"bylo nejlepsi veci\n")
 finalize()
-
-if(comm.rank() == 1) { pdf("Crossvalidation02.pdf")
-  ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)), 
-         aes(pct, error)) + geom_point() + geom_smooth() +
-    labs(title = "Loess smooth with 95% CI of crossvalidation")
-  dev.off()
-
-pdf("Basis02.pdf")
-  model_report(models2, kplot = 9)
-  dev.off()
