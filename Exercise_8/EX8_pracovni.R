@@ -165,3 +165,13 @@ cat("Proportion Correct:", correct/nrow(test), "\n")
 if(comm.rank() == 1) {cat(cv, "\n")}
 
 finalize()
+
+if(comm.rank() == 1) { pdf("Crossvalidation02.pdf")
+  ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)), 
+         aes(pct, error)) + geom_point() + geom_smooth() +
+    labs(title = "Loess smooth with 95% CI of crossvalidation")
+  dev.off()
+
+pdf("Basis02.pdf")
+  model_report(models, kplot = 9)
+  dev.off()
