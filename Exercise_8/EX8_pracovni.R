@@ -150,14 +150,14 @@ if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
 
 
 
-models = svdmod(train, train_lab, pct = 85) ### optimizing + right pct
+models2 = svdmod(train, train_lab, pct = 85) ### optimizing + right pct
 
 if(comm.rank() == 3) {pdf("Basis01.pdf")
-model_report(models, kplot = 9)
+model_report(models2, kplot = 9)
 dev.off()}
 
 
-predicts = predict_svdmod(test, models)  
+predicts = predict_svdmod(test, models2)  
 
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
@@ -173,5 +173,5 @@ if(comm.rank() == 1) { pdf("Crossvalidation02.pdf")
   dev.off()
 
 pdf("Basis02.pdf")
-  model_report(models, kplot = 9)
+  model_report(models2, kplot = 9)
   dev.off()
