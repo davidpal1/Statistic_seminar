@@ -132,7 +132,7 @@ setthreads(blas_threads)
 ## apply fold_err() over parameter combinations
 #cv_err = mclapply(1:nrow(cv), fold_err, cv = cv, folds = folds, train = train,
 #                  mc.cores = fork_cores)
-my_cv_err = lapply(my_nrow_cv, fold_err, cv = my_cv, folds = folds, train = train,
+my_cv_err = lapply(my_nrow_cv, fold_err, cv = cv, folds = folds, train = train,
                                     mc.cores = fork_cores)
 all_cv_err = allgather(my_cv_err)
 all_cv_err = do.call(combine, all_cv_err)
@@ -143,10 +143,20 @@ cv_err_par = tapply(unlist(all_cv_err), cv[, "par"], sum)
 ## sum fold errors for each parameter value
 #cv_err_par = tapply(unlist(cv_err), cv[, "par"], sum)
 
+if(comm.rank() == 1) { pdf("Crossvalidation01.pdf")
+  ggplot(data.frame(pct = pars, error = cv_err_par/nrow(train)), 
+         aes(pct, error)) + geom_point() + geom_smooth() +
+    labs(title = "Loess smooth with 95% CI of crossvalidation")}
+
+
 
 setthreads(4)
 models = svdmod(train, train_lab, pct = 95) ### optimizing + right pct
-model_report(models, kplot = 9)
+
+if(comm.rank() == 1) {pdf("Basis01.pdf")
+model_report(models, kplot = 9)}
+
+
 predicts = predict_svdmod(test, models)  
 
 correct <- sum(predicts == test_lab)
