@@ -1,3 +1,5 @@
+library(parallel)
+library(ggplot2)
 cat("Read and set up MNIST data:\n")
 system.time(source("../mnist/mnist_read.R"))
 source("../code/flexiblas_setup.r")
@@ -117,10 +119,7 @@ my_nrow_cv <- comm.chunk(nrow(cv),form="vector")
 my_cv <- cv[my_nrow_cv,]
  cat(comm.rank(), "Po  zozhozeni com", "\n")  
 
-library(parallel)
-library(ggplot2)
-source("../mnist/mnist_read.R")
-source("../code/flexiblas_setup.r")
+
 blas_threads = as.numeric(commandArgs(TRUE)[2])
 fork_cores = as.numeric(commandArgs(TRUE)[3])
 setback("OPENBLAS")
