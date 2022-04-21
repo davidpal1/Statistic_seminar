@@ -131,8 +131,8 @@ setthreads(blas_threads)
 ## apply fold_err() over parameter combinations
 #cv_err = mclapply(1:nrow(cv), fold_err, cv = cv, folds = folds, train = train,
 #                  mc.cores = fork_cores)
-my_cv_err = lapply(my_nrow_cv, fold_err, cv = cv, folds = folds, train = train,
-                                    mc.cores = fork_cores)
+my_cv_err = lapply(my_nrow_cv, fold_err, cv = cv, folds = folds, train = train)
+
 all_cv_err = allgather(my_cv_err)
 all_cv_err = do.call(combine, all_cv_err)
 
