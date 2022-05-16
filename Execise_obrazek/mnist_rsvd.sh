@@ -5,7 +5,7 @@
 #PBS -e mnist_rsvd.e
 #PBS -o mnist_rsvd.o
 
-cd ~/KPMS-IT4I-EX/mpi
+cd ~/Statistic_semiar/Exercise_obrazek
 pwd
 
 module load R
