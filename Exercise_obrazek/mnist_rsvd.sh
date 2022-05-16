@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N mnist_rsvd
 #PBS -l select=1:mpiprocs=32
-#PBS -l walltime=00:10:00
+#PBS -l walltime=00:15:00
 #PBS -q qexp
 #PBS -e mnist_rsvd.e
 #PBS -o mnist_rsvd.o
