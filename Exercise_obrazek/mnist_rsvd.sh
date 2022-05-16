@@ -5,7 +5,7 @@
 #PBS -e mnist_rsvd.e
 #PBS -o mnist_rsvd.o
 
-cd ~/Statistic_semiar/Exercise_obrazek
+cd ~/Statistic_seminar/Exercise_obrazek
 pwd
 
 module load R
