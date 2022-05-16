@@ -1,4 +1,5 @@
 
 jadra <- c(1,2,4,8,16,32)
 casy <- c(3.343,8.574,15.792,18.958,35.765, 67.835)
-plot(y=casy,x=jadra)
+obr <- plot(y=casy,x=jadra)
+dev.off()
