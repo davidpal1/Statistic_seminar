@@ -12,6 +12,7 @@ module load R
 echo "loaded R"
 
 ## --args blas fork
+time Rscript mnist_rsvd.R --args 4 8
 time Rscript mnist_rsvd.R --args 4 16
 time Rscript mnist_rsvd.R --args 4 32
 time Rscript mnist_rsvd.R --args 4 64
