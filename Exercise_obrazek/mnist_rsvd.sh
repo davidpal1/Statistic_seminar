@@ -6,6 +6,7 @@
 #PBS -e mnist_rsvd.e
 #PBS -o mnist_rsvd.o
 
+cat $BASH_SOURCE 
 cd ~/Statistic_seminar/Exercise_obrazek
 pwd
 
@@ -16,7 +17,7 @@ echo "loaded R"
 export OMPI_MCA_mpi_warn_on_fork=0
 export RDMAV_FORK_SAFE=1
 ## Fix for warnings from libfabric/1.12 bug
-module swap libfabric/1.12.1-GCCcore-10.3.0 libfabric/1.13.2-GCCcore
+module swap libfabric/1.12.1-GCCcore-10.3.0 libfabric/1.13.2-GCCcore-11.2.0
 
 
 ## --args blas fork
